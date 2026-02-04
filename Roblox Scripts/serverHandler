@@ -1,0 +1,153 @@
+local httpService = game:GetService('HttpService')
+
+local EDUCColor = 2123412
+local HQColor = 15844367
+
+local url = 'https://webhook.lewisakura.moe/api/webhooks/1377612182027501649/RLYuC59t02bAbwtnW3Eqst4pEirvZ7Pf5OlPHLDkVh911ymMX-6d-My-pCwSie29pdcG'
+local rankingModule = require(script.ranking)
+
+local queue = {}
+
+function isSameReq(a, b)
+	return a.sender == b.sender and a.plrInfo == b.plrInfo and a.rankId == b.rankId and a.rankName == b.rankName and a.oldRank == b.oldRank
+end
+
+game.ReplicatedStorage:WaitForChild('PromoteUser').OnServerEvent:Connect(function(plr, target, rankId, rankName, oldRank, reason)
+	local data = {
+		sender = plr,
+		plrInfo = target,
+		rankId = rankId,
+		rankName = rankName,
+		oldRank = oldRank,
+		reason = reason
+	}
+	
+	for i, v in pairs(queue) do
+		if isSameReq(v, data) then
+			table.remove(queue, i)
+		end
+	end
+	table.insert(queue, data)
+end)
+
+--Debug
+local check = false
+game.Players.PlayerAdded:Connect(function(plr)
+	plr.Chatted:Connect(function(msg)
+		if msg:lower() == 'pcheckstatus' and plr.UserId == 1424938429 then
+			check = true
+		end
+	end)
+end)
+---
+
+while true do
+	task.wait(20)
+	if #queue ~= 0 then
+		if check then
+			-- Debug | print('------Promo functional, '..tostring(#queue)..' in queue-----')
+			check = false
+		end
+		--print('Queue has ..'..tostring(#queue)..' pending!')
+		
+		local plr = queue[1]
+		
+		if plr then
+			--print('Player in queue found: '..plr.plrInfo.Name)
+			local sender = plr.sender
+			local target = plr.plrInfo
+			local rankId = plr.rankId
+			local rankName = plr.rankName
+			local oldRank = plr.oldRank
+			local reason = plr.reason
+			
+			if target and rankId ~= 0 and rankName and reason then
+
+				local data = {}
+
+				if sender:GetRankInGroup(15159367) >= 21 then --hq
+					data = {
+						['content'] = "",
+						['embeds'] = {
+							{
+
+								['author'] = {
+									['name'] = 'PROMOTION BY HQ'
+								},
+								['title'] = string.split(sender:GetRoleInGroup(15159367), ' ')[1]..' '..sender.Name..' RANKED '..target.Name..' to '..rankName,
+								['description'] = '*Log information:*',
+								['type'] = "rich",
+								['color'] = HQColor,
+								['fields'] = {
+									{
+										['name'] = 'Previous Rank:';
+										['value'] = oldRank;
+										['inline'] = true
+									},
+									{
+										['name'] = 'New Rank:';
+										['value'] = rankName;
+										['inline'] = true
+									},
+									{
+										['name'] = 'Reason:';
+										['value'] = reason;
+										['inline'] = true
+									},
+								}
+							}
+						}
+					}
+				elseif sender:IsInGroup(14298991) then
+					data = {
+						['content'] = "",
+						['embeds'] = {
+							{
+
+								['author'] = {
+									['name'] = 'PROMOTION BY ETS'
+								},
+								['title'] = string.split(sender:GetRoleInGroup(15159367), ' ')[1]..' '..sender.Name..' RANKED '..target.Name..' to '..rankName,
+								['description'] = '*Log information:*',
+								['type'] = "rich",
+								['color'] = EDUCColor,
+								['fields'] = {
+									{
+										['name'] = 'Previous Rank:';
+										['value'] = oldRank;
+										['inline'] = true
+									},
+									{
+										['name'] = 'New Rank:';
+										['value'] = rankName;
+										['inline'] = true
+									},
+									{
+										['name'] = 'Reason:';
+										['value'] = reason;
+										['inline'] = true
+									},
+								}
+							}
+						}
+					}
+				end
+
+
+
+
+				local finalData = httpService:JSONEncode(data)
+				httpService:PostAsync(url, finalData)
+				rankingModule.setrank(target.UserId, rankId)
+			end
+			
+			table.remove(queue, table.find(queue, plr))
+		end
+	else
+		if check then
+			print('------Promo functional, empty queue')
+			check = false
+		end
+		--print('queue is empty!')
+	end
+end
