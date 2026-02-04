@@ -11,7 +11,8 @@ Main script logic is done on Roblox Studios, which program can be seen in "https
 
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/dd3a2dd8cd973f5416c687b714fc23e0526dc22a/Images/Server_Hierarchy.png)
 
-"ranking" is a module script which connects to the gitHub repository through free third-party web service hosting by "Render.com", URL: "https://aba-automation.onrender.com/"
+"ranking" is a module script which connects to the gitHub repository through free third-party web service hosting by "Render.com".
+URL: "https://aba-automation.onrender.com/"
 
 At the same time, **serverHandler** would send a notification onto the preset Discord server determined by the Discord server's webhook.
 Since Roblox has banned Discord API from being used in its games, third-party services was used to change the WebhookProxy of the original Discord webhook. ("https://webhook.lewisakura.moe/api/webhooks/1377612182027501649/RLYuC59t02bAbwtnW3Eqst4pEirvZ7Pf5OlPHLDkVh911ymMX-6d-My-pCwSie29pdcG")
@@ -20,4 +21,16 @@ Since Roblox has banned Discord API from being used in its games, third-party se
 
 **localHandler** communicates player data with **serverHandler** through RemoteEvents, as seen in **localHandler line 115** where player data is sent, and **serverHandler lines 15-31**, where data is received and added to queue.
 The system updates a player's rank, whose data is stored in a queue, every 20 seconds **(serverHandler line 45)**, to prevent rate limitation.
+
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/7cd9c0e1720625afa51d1c2cf0c97e6979674ea2/Images/UI_Hierarchy.png)
+
+NOTE:
+Certain sections of the above system was created with assistance of online tutorials from YouTube.
+(e.g. JSON formats, usage of httpsService on Roblox to utilise the third-party API feature, "ranking" module script)
+However, code logic is **original**.
+
+This repository is **cloned**, for showcase purposes, from a **private repository** which is used in the actual system.
+The Roblox bot account's cookie has been removed from .env **intentionally** to protect the integrity of the currently running system.
+
+Evidence of ownership of the privated repository:
+![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/bb7605fdb8327835f9b3a22534e6713500c2e9fd/Images/Evidence_Of_Ownership.png)
