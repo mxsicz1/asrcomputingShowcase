@@ -26,6 +26,7 @@ The system updates a player's rank, whose data is stored in a queue, every 20 se
 
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/7cd9c0e1720625afa51d1c2cf0c97e6979674ea2/Images/UI_Hierarchy.png)
 
+---
 NOTE:
 Certain sections of the above system was created with assistance of online tutorials from YouTube.
 (e.g. JSON formats, usage of httpsService on Roblox to utilise the third-party API feature, "ranking" module script)
