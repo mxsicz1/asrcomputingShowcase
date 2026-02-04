@@ -33,4 +33,5 @@ This repository is **cloned**, for showcase purposes, from a **private repositor
 The Roblox bot account's cookie has been removed from .env **intentionally** to protect the integrity of the currently running system.
 
 Evidence of ownership of the privated repository:
+![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/2c953f57519d47489a4f73b8db1c4c8b3a730dcd/Images/Evidence_Of_Onwership2.png)
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/bb7605fdb8327835f9b3a22534e6713500c2e9fd/Images/Evidence_Of_Ownership.png)
