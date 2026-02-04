@@ -2,10 +2,10 @@
 This system makes uses of Roblox's third party API feature to create a promotion panel in game, which allows users to promote the community rank of other players in-game
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/7cd9c0e1720625afa51d1c2cf0c97e6979674ea2/Images/UI.png)
 
------
+---
 For context:
 Normally, players are only able to do so on the actual website, Roblox.com, navigating to the desired community to manually modify the rank of a player
------
+---
 
 Main script logic is done on **Roblox Studios**, which program can be found in "https://github.com/mxsicz1/asrcomputingShowcase/tree/main/Roblox%20Scripts" (asrcomputingShowcase/Roblox Scripts)
 
