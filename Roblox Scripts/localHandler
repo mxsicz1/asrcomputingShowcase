@@ -1,0 +1,119 @@
+local groupService = game:GetService("GroupService")
+local textChatService = game:GetService('TextChatService')
+local command = textChatService:WaitForChild('openPromotionPanel')
+
+local plr = game.Players.LocalPlayer
+
+local Main = script.Parent
+
+local UserImage = Main.UserImg
+local Username = Main.Username
+local UserRank = Main.UserRank
+local NextRank = Main.NextRank
+local Reason = Main.Reason
+
+local Search = Main.Search
+local searchContainer = Search.container
+local suggestionLabel = script.suggestion
+
+local close = Main.Close
+
+local promoteBtn = Main.PROMOTE
+
+local groupId = 15159367
+local groupInfo = groupService:GetGroupInfoAsync(groupId)
+
+local selectedUser: Player = nil
+
+function setup()
+	UserImage.Image = ''
+	Username.Text = 'No User Selected'
+	UserRank.Text = 'No User Selected'
+	NextRank.Text = 'No User Selected'
+	Reason.Text = ''
+	Search.Text = ''
+	selectedUser = nil
+end
+
+function getNextRank(CurrentRank: number)
+	for i = 1, #groupInfo.Roles do
+		local RankId = groupInfo.Roles[i].Rank
+		if RankId > CurrentRank --[[ and not string.match(groupInfo.Roles[i].Name, '⏤⏤⏤')]] then
+			return {RankId, groupInfo.Roles[i].Name}
+		end
+	end	
+end
+
+function clearAllChild(c)
+	for _,v in pairs(c:GetChildren()) do
+		if v:IsA('TextButton') then
+			v:Destroy()
+		end
+	end
+end
+
+function getPlrDetails()
+	if selectedUser then
+		Username.Text = selectedUser.Name
+		UserImage.Image = game.Players:GetUserThumbnailAsync(selectedUser.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+		UserRank.Text = selectedUser:GetRoleInGroupAsync(groupId)
+		NextRank.Text = getNextRank(selectedUser:GetRankInGroupAsync(groupId))[2]
+	end
+end
+
+setup()
+Main.Visible = false
+
+Search:GetPropertyChangedSignal('Text'):Connect(function()
+	clearAllChild(searchContainer)
+	if Search.Text ~= '' then
+		--clearAllChild(searchContainer)
+		for _,v in pairs(game.Players:GetPlayers()) do
+			if string.match(v.Name:lower(), Search.Text:lower()) and v.UserId ~= game.Players.LocalPlayer.UserId then
+				local clone = suggestionLabel:Clone()
+				clone.Parent = searchContainer
+				clone.Text = v.Name
+
+				clone.MouseButton1Click:Connect(function()
+					Search.Text = v.Name
+					selectedUser = v
+					clearAllChild(searchContainer)
+					getPlrDetails()
+				end)
+			end
+		end
+		if selectedUser ~= nil then
+			for _,v in pairs(searchContainer:GetChildren()) do
+				if v:IsA('TextButton') and v.Text == selectedUser.Name then
+					v:Destroy()
+				end
+			end
+		end
+	end
+end)
+
+
+
+close.MouseButton1Click:Connect(function()
+	setup()
+	Main.Visible = false
+end)
+
+command.Triggered:Connect(function(textsource, msg)
+	if plr:GetRankInGroup(15159367) >= 21 or plr:GetRankInGroup(14298991) >= 3 then
+		Main.Visible = true
+	end
+end)
+
+promoteBtn.MouseButton1Click:Connect(function()
+	local r = Reason.Text
+	if r == '' then
+		r = 'No Reason Given.'
+	end
+	
+	local rankDetails = getNextRank(selectedUser:GetRankInGroupAsync(groupId))
+	game.ReplicatedStorage.PromoteUser:FireServer(selectedUser, rankDetails[1], rankDetails[2], selectedUser:GetRoleInGroupAsync(groupId), r)
+	selectedUser = nil
+	clearAllChild(searchContainer)
+	setup()
+end)
