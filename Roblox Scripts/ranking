@@ -1,0 +1,25 @@
+local ranking = {}
+
+ranking.URL = 'https://aba-automation.onrender.com/'
+
+ranking.setrank = function(UserId: string, RoleId: string, Reason: string)
+	local ranked = game:GetService("HttpService"):GetAsync(ranking.URL .. "ranker?userid=" .. UserId .. "&rank=" .. RoleId)
+	
+	print('ranked player!,', ranked)
+end
+
+ranking.groupId = 15159367
+
+local groupService = game:GetService("GroupService")
+local groupInfo = groupService:GetGroupInfoAsync(ranking.groupId)
+
+ranking.getNextRank = function(CurrentRank: number)
+	for i = 1, #groupInfo.Roles do
+		local RankId = groupInfo.Roles[i].Rank
+		if RankId > CurrentRank and not string.match(groupInfo.Roles[i].Name, '⏤⏤⏤') then
+			return RankId
+		end
+	end	
+end
+
+return ranking
