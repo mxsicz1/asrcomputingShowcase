@@ -20,6 +20,7 @@ At the same time, **serverHandler** would send a notification onto the preset Di
 Since Roblox has banned Discord API from being used in its games, third-party services was used to change the WebhookProxy of the original Discord webhook. ("https://webhook.lewisakura.moe/api/webhooks/1377612182027501649/RLYuC59t02bAbwtnW3Eqst4pEirvZ7Pf5OlPHLDkVh911ymMX-6d-My-pCwSie29pdcG")
 
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/7cd9c0e1720625afa51d1c2cf0c97e6979674ea2/Images/DiscordMessage.png)
+![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/691a3dae3b9adecb2000084adccb7c1b6f9dcb54/Images/RobloxGroup_AuditLog.png)
 
 **localHandler** communicates player data with **serverHandler** through RemoteEvents, as seen in **localHandler line 115** where player data is sent, and **serverHandler lines 15-31**, where data is received and added to queue.
 The system updates a player's rank, whose data is stored in a queue, every 20 seconds **(serverHandler line 45)**, to prevent rate limitation.
