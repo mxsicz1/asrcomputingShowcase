@@ -8,7 +8,9 @@ Normally, players are only able to do so on the actual website, Roblox.com, navi
 Main script logic is done on Roblox Studios, which program can be seen in "https://github.com/mxsicz1/asrcomputingShowcase/tree/main/Roblox%20Scripts" (asrcomputingShowcase/Roblox Scripts)
 
 **serverHandler** and ranking scripts can be found in below hierarchy
+
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/dd3a2dd8cd973f5416c687b714fc23e0526dc22a/Images/Server_Hierarchy.png)
+
 "ranking" is a module script which connects to the gitHub repository through free third-party web service hosting by "Render.com", URL: "https://aba-automation.onrender.com/"
 
 At the same time, **serverHandler** would send a notification onto the preset Discord server determined by the Discord server's webhook.
