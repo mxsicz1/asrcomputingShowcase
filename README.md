@@ -13,6 +13,7 @@ Main script logic is done on Roblox Studios, which program can be seen in "https
 
 At the same time, **serverHandler** would send a notification onto the preset Discord server determined by the Discord server's webhook.
 Since Roblox has banned Discord API from being used in its games, third-party services was used to change the WebhookProxy of the original Discord webhook. ("https://webhook.lewisakura.moe/api/webhooks/1377612182027501649/RLYuC59t02bAbwtnW3Eqst4pEirvZ7Pf5OlPHLDkVh911ymMX-6d-My-pCwSie29pdcG")
+
 ![image alt](https://github.com/mxsicz1/asrcomputingShowcase/blob/7cd9c0e1720625afa51d1c2cf0c97e6979674ea2/Images/DiscordMessage.png)
 
 **localHandler** communicates player data with **serverHandler** through RemoteEvents, as seen in **localHandler line 115** where player data is sent, and **serverHandler lines 15-31**, where data is received and added to queue.
